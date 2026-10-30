@@ -20,7 +20,7 @@ internal static class UpdateChecks
             Assert(UpdateVersion.Parse("1.0.0-beta.10").CompareTo(UpdateVersion.Parse("1.0.0-beta.2")) > 0, "numeric prerelease ordering");
             Assert(UpdateVersion.Parse("1.0.0").CompareTo(UpdateVersion.Parse("1.0.0-rc.1")) > 0, "stable ordering");
             Console.WriteLine("PASS update semantic versions");
-            string Release(string tag, bool pre=false, string? name=null) => JsonSerializer.Serialize(new { tag_name=tag, prerelease=pre, draft=false, body="notes", assets=new[]{new {name=name??("Liangtu-"+tag.Replace("windows-v", "")+"-Windows-x64-portable.zip"),size=3,digest="sha256:"+new string('A',64),browser_download_url="https://github.com/shelter1995/tendedero/releases/download/"+tag+"/"+(name??"package.zip")}}});
+            string Release(string tag, bool pre=false, string? name=null) => JsonSerializer.Serialize(new { tag_name=tag, prerelease=pre, draft=false, body="notes", assets=new[]{new {name=name??("Liangtu-"+tag.Replace("windows-v", "")+"-Windows-x64-portable.zip"),size=3,digest="sha256:"+new string('A',64),browser_download_url="https://github.com/shelter1995/liangtu/releases/download/"+tag+"/"+(name??"package.zip")}}});
             var releases="["+string.Join(",",Release("v9.0.0"),Release("windows-v1.1.0"),Release("windows-v1.2.0",true),Release("windows-v1.3.0",false,"Tendedero.dmg"))+"]";
             Assert(UpdateService.SelectRelease(releases,UpdateVersion.Parse("1.0.0"),false,false)?.Version.ToString()=="1.1.0","Windows stable filter");
             Assert(UpdateService.SelectRelease(releases,UpdateVersion.Parse("1.0.0"),true,false)?.Version.ToString()=="1.2.0","prerelease opt-in");
@@ -33,7 +33,7 @@ internal static class UpdateChecks
             using var client=new HttpClient(new ReplyHandler(content)); var service=new UpdateService(client);
             using var offline=new HttpClient(new ReplyHandler(content,HttpStatusCode.ServiceUnavailable));
             try{await new UpdateService(offline).CheckAsync(UpdateVersion.Parse("1.0.0"),false,false,CancellationToken.None);throw new Exception("HTTP failure treated as current");}catch(HttpRequestException){}
-            var asset=new UpdateAsset("package.zip", "https://github.com/shelter1995/tendedero/releases/download/windows-v1.0.0/package.zip",3,digest);
+            var asset=new UpdateAsset("package.zip", "https://github.com/shelter1995/liangtu/releases/download/windows-v1.0.0/package.zip",3,digest);
             await service.DownloadAsync(asset,Path.Combine(root,"good.zip"),null,CancellationToken.None);
             await RejectAsync(()=>service.DownloadAsync(asset with {Sha256=new string('0',64)},Path.Combine(root,"bad.zip"),null,CancellationToken.None),"wrong digest accepted");
             await RejectAsync(()=>service.DownloadAsync(asset with {Size=4},Path.Combine(root,"short.zip"),null,CancellationToken.None),"short download accepted");

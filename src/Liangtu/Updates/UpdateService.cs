@@ -17,13 +17,13 @@ internal sealed record StagedPackage(string Directory,UpdateVersion Version,stri
 internal sealed class UpdateService(HttpClient client)
 {
     static readonly HashSet<string> RuntimeCultures=new(CultureInfo.GetCultures(CultureTypes.AllCultures).Select(c=>c.Name),StringComparer.OrdinalIgnoreCase);
-    public const string ReleasesUrl = "https://github.com/shelter1995/tendedero/releases";
+    public const string ReleasesUrl = "https://github.com/shelter1995/liangtu/releases";
     public static UpdateVersion CurrentVersion => UpdateVersion.Parse(typeof(UpdateService).Assembly.GetName().Version is { } v ? $"{v.Major}.{v.Minor}.{v.Build}" : "0.0.0");
     public static bool Installed => File.Exists(Path.Combine(AppContext.BaseDirectory,"unins000.exe"));
     public static HttpClient CreateHttpClient() { var client=new HttpClient { Timeout=TimeSpan.FromMinutes(20) }; client.DefaultRequestHeaders.UserAgent.ParseAdd("Liangtu-Windows-Updater/1.0"); client.DefaultRequestHeaders.Accept.ParseAdd("application/vnd.github+json"); return client; }
     public async Task<UpdateRelease?> CheckAsync(UpdateVersion current,bool prerelease,bool installed,CancellationToken token)
     {
-        using var response=await client.GetAsync("https://api.github.com/repos/shelter1995/tendedero/releases?per_page=100",token).ConfigureAwait(false);
+        using var response=await client.GetAsync("https://api.github.com/repos/shelter1995/liangtu/releases?per_page=100",token).ConfigureAwait(false);
         response.EnsureSuccessStatusCode();
         return SelectRelease(await response.Content.ReadAsStringAsync(token).ConfigureAwait(false),current,prerelease,installed);
     }
@@ -51,7 +51,7 @@ internal sealed class UpdateService(HttpClient client)
     }
     static void ValidateUrl(string url)
     {
-        if(!Uri.TryCreate(url,UriKind.Absolute,out var uri)||uri.Scheme!="https"||uri.Host!="github.com"||!uri.AbsolutePath.StartsWith("/shelter1995/tendedero/releases/download/",StringComparison.Ordinal)||uri.UserInfo.Length!=0)throw new InvalidDataException("更新资产不属于指定的 Windows 发布源。");
+        if(!Uri.TryCreate(url,UriKind.Absolute,out var uri)||uri.Scheme!="https"||uri.Host!="github.com"||!uri.AbsolutePath.StartsWith("/shelter1995/liangtu/releases/download/",StringComparison.Ordinal)||uri.UserInfo.Length!=0)throw new InvalidDataException("更新资产不属于指定的 Windows 发布源。");
     }
     public async Task DownloadAsync(UpdateAsset asset,string destination,IProgress<double>? progress,CancellationToken token)
     {

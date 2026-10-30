@@ -6,9 +6,9 @@
 
 ## 下载 0.10.7
 
-- [Windows x64 安装程序](https://github.com/shelter1995/tendedero/releases/download/windows-v0.10.7/Liangtu-0.10.7-Setup-x64-r1.exe)：适合大多数用户，自带 .NET 桌面运行时，安装到当前用户目录。
-- [Windows x64 便携 ZIP](https://github.com/shelter1995/tendedero/releases/download/windows-v0.10.7/Liangtu-0.10.7-Windows-x64-portable.zip)：完整解压后运行 Start.cmd 或 Liangtu.exe。
-- [完整 Release 与 SHA-256 校验文件](https://github.com/shelter1995/tendedero/releases/tag/windows-v0.10.7)。已有安装版使用内置升级时，下载 Installer-r1.zip；便携版使用 portable.zip。
+- [Windows x64 安装程序](https://github.com/shelter1995/liangtu/releases/download/windows-v0.10.7/Liangtu-0.10.7-Setup-x64-r1.exe)：适合大多数用户，自带 .NET 桌面运行时，安装到当前用户目录。
+- [Windows x64 便携 ZIP](https://github.com/shelter1995/liangtu/releases/download/windows-v0.10.7/Liangtu-0.10.7-Windows-x64-portable.zip)：完整解压后运行 Start.cmd 或 Liangtu.exe。
+- [完整 Release 与 SHA-256 校验文件](https://github.com/shelter1995/liangtu/releases/tag/windows-v0.10.7)。已有安装版使用内置升级时，下载 Installer-r1.zip；便携版使用 portable.zip。
 
 升级前保存编辑并从托盘退出旧版。0.8.2及更早版本请手动运行新安装程序或解压新便携包；后续版本可使用托盘“Windows更新与升级”。设置和收件箱沿用原目录。
 
@@ -27,23 +27,31 @@
 
 ## 视频组件与数据
 
-安装时可选下载 FFmpeg/FFprobe，包含镜像回退和固定 SHA-256 校验；也支持离线组件 ZIP。便携版不附带 FFmpeg，可复用本机或 tools/ 中的组件。没有组件时图片功能可用。详见[视频组件说明](https://github.com/shelter1995/tendedero/blob/windows-port/windows/installer/video-component-readme.txt)。
+安装时可选下载 FFmpeg/FFprobe，包含镜像回退和固定 SHA-256 校验；也支持离线组件 ZIP。便携版不附带 FFmpeg，可复用本机或 tools/ 中的组件。没有组件时图片功能可用。详见[视频组件说明](https://github.com/shelter1995/liangtu/blob/main/installer/video-component-readme.txt)。
 
 数据位于 `%LOCALAPPDATA%/Liangtu`，截图处理在本地完成，无账号、遥测或截图上传。检查/下载升级和安装视频组件需要联网。卸载默认保留数据，删除数据须明确选择。裁剪/保存可能替换原文件，保存前请确认。
 
 ## 源码与构建
 
-Windows 实现在 [windows-port 分支的 windows/](https://github.com/shelter1995/tendedero/tree/windows-port/windows)。需要 Windows x64、.NET 8 SDK、PowerShell 7、Visual C++ Build Tools 与 Windows SDK。
+Windows 源码直接位于本仓库 `main` 分支根目录。需要 Windows x64、.NET 8 SDK、PowerShell 7、Visual C++ Build Tools 与 Windows SDK。
 
 ```powershell
-git clone --branch windows-port https://github.com/shelter1995/tendedero.git
-cd tendedero/windows
+git clone https://github.com/shelter1995/liangtu.git
+cd liangtu
 pwsh -File test-safe.ps1
 pwsh -File build.ps1
 ```
 
-`src/Liangtu` 为 WPF 与 Windows 集成，`src/Liangtu.Core` 为布局/手势规则，`scripts` 为构建与验证，`installer` 为 Inno Setup 配置。安装器构建还需要 Inno Setup 放在 `.tools/InnoSetup`。上游 Swift 项目保留在仓库根部。
+`src/Liangtu` 为 WPF 与 Windows 集成，`src/Liangtu.Core` 为布局/手势规则，`scripts` 为构建与验证，`installer` 为 Inno Setup 配置。安装器构建还需要 Inno Setup 放在 `.tools/InnoSetup`。原版 Swift 实现可在上游 Tendedero 仓库查看。
 
-本轮486项受控回归通过，用户已确认本地版本效果；这不覆盖所有显卡、远程会话、Windows 10和物理混合DPI多屏。[0.10.7验证记录](https://github.com/shelter1995/tendedero/blob/windows-port/windows/docs/verification-v0.10.7.md)。报告问题时请说明版本、缩放、屏幕布局、复现步骤，分享截图或日志前检查私人内容。
+本轮486项受控回归通过，用户已确认本地版本效果；这不覆盖所有显卡、远程会话、Windows 10和物理混合DPI多屏。[0.10.7验证记录](https://github.com/shelter1995/liangtu/blob/main/docs/verification-v0.10.7.md)。报告问题时请说明版本、缩放、屏幕布局、复现步骤，分享截图或日志前检查私人内容。
 
 保留原作者 MIT 许可证与名称/图标条款；打包保留 .NET、FFmpeg 等适用许可。晾图使用自己的品牌和生成素材。
+
+## 项目来源与维护
+
+晾图由 [shelter1995](https://github.com/shelter1995) 在本仓库独立维护。原始创意和 Windows 移植的源码基准来自 **Alejandro Buján** 的 [Tendedero](https://github.com/alejandrobujan/tendedero)，基于 v1.6.0、提交 `32a3e47187fdea7b2fd43b3ab5a913f0ed33724a`。来源和迁移记录见 [UPSTREAM.md](UPSTREAM.md)，后续维护流程见 [MAINTAINING.md](MAINTAINING.md)。
+
+保留原作者版权声明和[许可证](LICENSE)。原项目名称与图标不包含在代码授权内；晾图使用独立名称和图标，不代表原作者官方发布或背书。
+
+0.10.7 及更早的程序包按原文件迁移，内置更新仍指向之前的 fork。在包含新更新源的后续版本发布前，请从本仓库手动下载更新。

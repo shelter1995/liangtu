@@ -1,6 +1,6 @@
 # Windows 发布与升级
 
-发行仓库：https://github.com/shelter1995/tendedero 。只匹配windows-v开头的语义版本与对应Windows资产。远端版本以GitHub实际发布为准，本地构建不等于公开发布；每次均核对远端实际状态。
+发行仓库：https://github.com/shelter1995/liangtu 。只匹配windows-v开头的语义版本与对应Windows资产。远端版本以GitHub实际发布为准，本地构建不等于公开发布；每次均核对远端实际状态。
 
 1. 更新项目/安装器版本，运行核心、安全、对象、主题和更新检查。
 2. 运行 scripts/package-portable.ps1，再运行 scripts/package-installer.ps1 -Version <版本>。便携包含apply-update.ps1、update-info.json（kind:portable）、SHA256SUMS.json；安装器ZIP含kind:installer、installerFile及完整清单，可直接导入安装版。

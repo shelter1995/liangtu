@@ -6,9 +6,9 @@ Liangtu is a community Windows port of [Tendedero](https://github.com/alejandrob
 
 ## Download 0.10.7
 
-- [Windows x64 installer](https://github.com/shelter1995/tendedero/releases/download/windows-v0.10.7/Liangtu-0.10.7-Setup-x64-r1.exe), recommended for most users. Includes the .NET desktop runtime and installs for the current user.
-- [Portable Windows x64 ZIP](https://github.com/shelter1995/tendedero/releases/download/windows-v0.10.7/Liangtu-0.10.7-Windows-x64-portable.zip). Extract the entire archive and run Start.cmd or Liangtu.exe.
-- [Release notes and SHA-256 files](https://github.com/shelter1995/tendedero/releases/tag/windows-v0.10.7). Use Installer-r1.zip for in-app updates of installed copies, or portable.zip for portable copies.
+- [Windows x64 installer](https://github.com/shelter1995/liangtu/releases/download/windows-v0.10.7/Liangtu-0.10.7-Setup-x64-r1.exe), recommended for most users. Includes the .NET desktop runtime and installs for the current user.
+- [Portable Windows x64 ZIP](https://github.com/shelter1995/liangtu/releases/download/windows-v0.10.7/Liangtu-0.10.7-Windows-x64-portable.zip). Extract the entire archive and run Start.cmd or Liangtu.exe.
+- [Release notes and SHA-256 files](https://github.com/shelter1995/liangtu/releases/tag/windows-v0.10.7). Use Installer-r1.zip for in-app updates of installed copies, or portable.zip for portable copies.
 
 Save your edits and quit the old tray process before upgrading. Version 0.8.2 and earlier require a manual upgrade; later versions include a Windows update entry. Existing settings and inbox files use the same data directory.
 
@@ -30,23 +30,31 @@ The line normally avoids full-screen applications. Game do-not-disturb hides pin
 
 ## Video and local data
 
-The installer optionally downloads FFmpeg/FFprobe, with fallback sources, fixed SHA-256 verification, and an offline component ZIP option. Portable packages do not bundle FFmpeg; use a local installation or tools/ directory. Image features work without it. See the [video component instructions](https://github.com/shelter1995/tendedero/blob/windows-port/windows/installer/video-component-readme.txt).
+The installer optionally downloads FFmpeg/FFprobe, with fallback sources, fixed SHA-256 verification, and an offline component ZIP option. Portable packages do not bundle FFmpeg; use a local installation or tools/ directory. Image features work without it. See the [video component instructions](https://github.com/shelter1995/liangtu/blob/main/installer/video-component-readme.txt).
 
 Settings and inbox data are stored in `%LOCALAPPDATA%/Liangtu`. Screenshot processing is local, with no account, telemetry, or screenshot uploads. Update checks/downloads and video component installation require a connection. Uninstalling keeps data by default; removal must be chosen explicitly. Saving or trimming can replace the original file, so review the result before saving.
 
 ## Build from source
 
-The Windows implementation lives in [windows/ on the windows-port branch](https://github.com/shelter1995/tendedero/tree/windows-port/windows). Build requirements: Windows x64, .NET 8 SDK, PowerShell 7, Visual C++ Build Tools, and the Windows SDK.
+The Windows application is maintained at the root of this repository on the `main` branch. Build requirements: Windows x64, .NET 8 SDK, PowerShell 7, Visual C++ Build Tools, and the Windows SDK.
 
 ```powershell
-git clone --branch windows-port https://github.com/shelter1995/tendedero.git
-cd tendedero/windows
+git clone https://github.com/shelter1995/liangtu.git
+cd liangtu
 pwsh -File test-safe.ps1
 pwsh -File build.ps1
 ```
 
-`src/Liangtu` contains WPF and Windows integration; `src/Liangtu.Core` contains layout/gesture policy. Build and verification scripts are under `scripts`, with Inno Setup definitions under `installer`. Installer packaging requires Inno Setup in `.tools/InnoSetup`. The upstream Swift project remains at the repository root.
+`src/Liangtu` contains WPF and Windows integration; `src/Liangtu.Core` contains layout/gesture policy. Build and verification scripts are under `scripts`, with Inno Setup definitions under `installer`. Installer packaging requires Inno Setup in `.tools/InnoSetup`. The original Swift implementation is available in the upstream Tendedero repository.
 
-The current revision passed 486 controlled regression checks and was approved after local use. This does not cover every graphics driver, remote session, Windows 10 installation, or physical mixed-DPI setup. See the [0.10.7 verification record](https://github.com/shelter1995/tendedero/blob/windows-port/windows/docs/verification-v0.10.7.md). Include the version, display scaling/layout, reproduction steps, and error text when reporting issues; review screenshots and logs for private content before sharing.
+The current revision passed 486 controlled regression checks and was approved after local use. This does not cover every graphics driver, remote session, Windows 10 installation, or physical mixed-DPI setup. See the [0.10.7 verification record](https://github.com/shelter1995/liangtu/blob/main/docs/verification-v0.10.7.md). Include the version, display scaling/layout, reproduction steps, and error text when reporting issues; review screenshots and logs for private content before sharing.
 
 The original MIT license and name/icon exclusions are preserved. Packages include applicable .NET, FFmpeg and other notices. Liangtu uses independent branding and generated assets.
+
+## Project origin and maintenance
+
+Liangtu is maintained independently by [shelter1995](https://github.com/shelter1995) in this repository. Its original design and Windows port are based on [Tendedero](https://github.com/alejandrobujan/tendedero) by **Alejandro Buján**, using v1.6.0, commit `32a3e47187fdea7b2fd43b3ab5a913f0ed33724a`, as the source baseline. See [UPSTREAM.md](UPSTREAM.md) for attribution and migration history and [MAINTAINING.md](MAINTAINING.md) for the maintenance workflow.
+
+The original copyright notice and [license](LICENSE) are retained. Tendedero’s name and icon are excluded from its code license; Liangtu uses its own branding. It is not an official release or an endorsement by the upstream author.
+
+Existing 0.10.7 and earlier packages were migrated unchanged. Their built-in updater still points to the earlier fork. Download releases from this repository manually until a later build containing the new update source is published.
