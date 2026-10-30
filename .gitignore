@@ -11,3 +11,14 @@ native/*.obj
 native/*.lib
 native/*.exp
 native/*.dll
+
+.tools/
+*.log
+*.obj
+*.lib
+*.exp
+*.dll
+*.exe
+*.pdb
+__pycache__/
+*.pyc
